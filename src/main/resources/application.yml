@@ -1,0 +1,25 @@
+server.port: 8091
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8090/eureka/
+
+spring:
+  application:
+    name: '@project.artifactId@'
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        -
+          id: app-pragma-training-person
+          uri: lb://app-pragma-training-person
+          predicates:
+            - Path=/application/pragma/training/v1/people/**
+        -
+          id: app-pragma-training-image
+          uri: lb://app-pragma-training-image
+          predicates:
+            - Path=/application/pragma/training/v1/images/**
